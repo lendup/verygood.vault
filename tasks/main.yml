@@ -1,0 +1,18 @@
+---
+# tasks file for verygood.vault
+- group: name={{ vg_vault_group }} state=present
+
+- user: name={{ vg_vault_user }} comment="Very Good Vault User" group={{ vg_vault_group }} home={{ vg_vault_home }} state=present
+
+- file: path={{ vg_vault_home }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }}
+- file: path=/var/log/{{ vg_vault_user }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }}
+
+- include: http.yml
+  tags:
+    - vault
+    - vault-http
+
+- include: sftp.yml
+  tags:
+    - vault
+    - vault-sftp

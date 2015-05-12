@@ -1,0 +1,7 @@
+#!/bin/sh
+exec 2>&1
+
+ROOT=/app
+
+cd $ROOT
+exec java -jar {{ vg_vault_binary }} server {{ vg_vault_config_http }}

@@ -1,0 +1,16 @@
+---
+# handlers file for verygood.vault
+- name: restart vault
+  command: supervisorctl restart vault-http
+
+- name: start vault
+  service: name=vault state=started
+
+- name: restart supervisor service
+  service: name=supervisor state=restarted
+
+- name: restart monit
+  service: name=monit state=restarted
+
+- name: reload logrotate
+  command: logrotate -s /var/lib/logrotate.status /etc/logrotate.conf
