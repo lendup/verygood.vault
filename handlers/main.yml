@@ -1,7 +1,10 @@
 ---
 # handlers file for verygood.vault
-- name: restart vault
+- name: restart vault http
   command: supervisorctl restart vault-http
+
+- name: restart vault sftp
+  command: supervisorctl restart vault-sftp
 
 - name: start vault
   service: name=vault state=started

@@ -1,1 +1,36 @@
 ---
+
+- name: Create config dir
+  file: path=/etc/verygood/ state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
+
+- name: Copy config to {{ vg_vault_config_sftp }}
+  template: dest={{ vg_vault_config_sftp }} backup=yes src=vault-sftp.config.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
+  notify:
+    - restart supervisor service
+
+- name: Create runit dir
+  file: path=/etc/service/vault-sftp/log state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
+
+- name: Install runit config
+  template: dest=/etc/service/vault-sftp/run src=runit/run.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }}
+
+- name: Install runit config
+  template: dest=/etc/service/vault-sftp/log/run src=runit/log/run.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }}
+
+- name: Install Supervisor
+  apt: name=supervisor state=present
+
+- name: Supervisor config
+  template: dest=/etc/supervisor/conf.d/vault-sftp.conf src=vault-sftp.supervisor.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }}
+  notify:
+    - restart supervisor service
+
+- name: Install Vault binary
+#  s3: bucket=verygood object=/software/vault-http-{{ vg_vault_http_version }}.jar dest={{ vg_vault_http_binary }} mode=get
+  get_url: url={{ vg_vault_http_binary_url }} dest={{ vg_vault_http_binary }} sha256sum={{ vg_vault_http_binary_hash }}
+  notify:
+    - restart vault
+
+- name: Vault Healthy
+  copy: dest={{ vg_vault_file_health_check.file_path }} content="Very Good to go" owner={{ vg_vault_user }} group={{ vg_vault_group }}
+

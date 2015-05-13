@@ -1,0 +1,17 @@
+[program:vault-sftp]
+command=java -jar {{ vg_vault_sftp_binary }} server {{ vg_vault_config_sftp }}
+user={{ vg_vault_user }}
+autostart=true
+autorestart=true
+redirect_stderr=true
+redirect_stderr=false
+stdout_logfile=/var/log/{{ vg_vault_user }}/{{ vg_vault_sftp_version }}.log
+stdout_logfile_maxbytes=20MB
+stdout_logfile_backups=1
+stdout_capture_maxbytes=0
+stdout_events_enabled=false
+stderr_logfile=/var/log/{{ vg_vault_user }}/{{ vg_vault_sftp_version }}.err
+stderr_logfile_maxbytes=20MB
+stderr_logfile_backups=1
+stderr_capture_maxbytes=0
+stderr_events_enabled=false

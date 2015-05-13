@@ -4,6 +4,9 @@
 vg_vault_user: vault
 vg_vault_group: vault
 
+vg_vault_install_http: no
+vg_vault_install_sftp: no
+
 vg_vault_config_http: /etc/verygood/vault.http.conf.yml
 vg_vault_config_sftp: /etc/verygood/vault.sftp.conf.yml
 
@@ -14,10 +17,15 @@ vg_vault_sftp_port: 8082
 vg_vault_sftp_bind: 0.0.0.0
 
 vg_vault_home: /opt/vault/
-vg_vault_version: vault-http-0.1.5-SNAPSHOT
-vg_vault_binary: "{{ vg_vault_home }}{{ vg_vault_version }}.jar"
-vg_vault_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_version }}.jar
-vg_vault_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
+vg_vault_http_version: vault-http-0.1.5-SNAPSHOT
+vg_vault_http_binary: "{{ vg_vault_home }}{{ vg_vault_http_version }}.jar"
+vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_http_version }}.jar
+vg_vault_http_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
+
+vg_vault_sftp_version: vault-http-0.1.5-SNAPSHOT
+vg_vault_sftp_binary: "{{ vg_vault_home }}{{ vg_vault_sftp_version }}.jar"
+vg_vault_sftp_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_sftp_version }}.jar
+vg_vault_sftp_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
 
 vg_vault_clients:
   - rule: ServerName == "mycal.vgs.io" && RequestURI == "/vap/communicator/online"

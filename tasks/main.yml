@@ -11,8 +11,10 @@
   tags:
     - vault
     - vault-http
+  when: vg_vault_install_http
 
 - include: sftp.yml
   tags:
     - vault
     - vault-sftp
+  when: vg_vault_install_sftp
