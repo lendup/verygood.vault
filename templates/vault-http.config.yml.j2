@@ -41,8 +41,8 @@ logging:
       target: stdout
       logFormat: "%d{ISO8601}|Δ<%r>|%level|%logger|Thd<%t>: %X{code} %m%n%rEx"
     - type: syslog
-      host: localhost
-      port: 514
+      host: {{ vg_vault_rsyslog_host }}
+      port: {{ vg_vault_rsyslog_port }}
       facility: local0
       threshold: ALL
       stackTracePrefix: \t

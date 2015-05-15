@@ -7,6 +7,9 @@ vg_vault_group: vault
 vg_vault_install_http: no
 vg_vault_install_sftp: no
 
+vg_vault_rsyslog_host: localhost
+vg_vault_rsyslog_port: 514
+
 vg_vault_config_http: /etc/verygood/vault.http.conf.yml
 vg_vault_config_sftp: /etc/verygood/vault.sftp.conf.yml
 
