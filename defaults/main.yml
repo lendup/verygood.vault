@@ -34,16 +34,22 @@ vg_vault_clients:
   - rule: ServerName == "mycal.vgs.io" && RequestURI == "/vap/communicator/online"
     cls: com.verygood.payments.vault.examples.MythicalCapitalClient
     config:
-      scheme: http
-      host: localhost
-      port: 5000
-      endpoint: /echo/authorize
+      - key: scheme
+        value: https
+      - key: host
+        value: google.com
+      - key: port
+        value: 443
+      - key: endpoint
+        value: /echo/authorize
   - rule: ServerName == "vault.vgs.io"
     cls: com.verygood.payments.vault.examples.ReversingVaultClient
   - rule: ServerName == "tokenize.vgs.io"
     cls: com.verygood.payments.vault.examples.TokenizingClient
 
 vg_vault_aws_kms_key_id: 123
+
+vg_vault_db_uri: jdbc:postgresql://localhost/test
 
 vg_vault_file_health_check:
   file_path: '/tmp/vault-health'

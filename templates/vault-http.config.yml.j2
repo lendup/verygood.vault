@@ -1,20 +1,12 @@
 vaultClients:
-{#  {% for vault_client in vg_vault_clients %}#}
-{#  - rule: {{ vault_client.rule }}#}
-{#    cls: {{ vault_client.cls }}#}
-{#  {% endfor %}#}
-
-  - rule: ServerName == "mycal.vgs.io" && RequestURI == "/vap/communicator/online"
-    cls: com.verygood.payments.vault.examples.MythicalCapitalClient
+  {% for vault_client in vg_vault_clients %}
+  - rule: {{ vault_client.rule }}
+    cls: {{ vault_client.cls }}
     config:
-      scheme: http
-      host: localhost
-      port: 5000
-      endpoint: /echo/authorize
-  - rule: ServerName == "vault.vgs.io"
-    cls: com.verygood.payments.vault.examples.ReversingVaultClient
-  - rule: ServerName == "tokenize.vgs.io"
-    cls: com.verygood.payments.vault.examples.TokenizingClient
+      {% for item in vault_client.config %}
+      {{ item.key }}: {{ item.value }}
+      {% endfor %}
+  {% endfor %}
 
 tokenizer:
   cls: com.verygood.payments.vault.client.tokens.AWSKMSStringTokenizerFactory
@@ -24,7 +16,7 @@ tokenizer:
 tokenManager:
   cls: com.verygood.payments.vault.client.tokens.SQLTokenManagerFactory
   config:
-    connectionString: jdbc:sqlite:/tmp/vault-http
+    connectionString: {{ vg_vault_db_uri }}
 
 logging:
   level: INFO
