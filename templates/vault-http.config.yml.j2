@@ -2,10 +2,12 @@ vaultClients:
 {% for vault_client in vg_vault_clients %}
   - rule: {{ vault_client.rule }}
     cls: {{ vault_client.cls }}
+{% if vault_client.config %}
     config:
 {% for item in vault_client.config %}
       {{ item.key }}: {{ item.value }}
 {% endfor %}
+{% endif %}
 {% endfor %}
 
 tokenizer:
@@ -17,6 +19,7 @@ tokenManager:
   cls: com.verygood.payments.vault.client.tokens.SQLTokenManagerFactory
   config:
     connectionString: {{ vg_vault_db_uri }}
+    driver: org.postgresql.Driver
 
 logging:
   level: INFO

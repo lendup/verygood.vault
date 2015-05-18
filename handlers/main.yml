@@ -9,6 +9,9 @@
 - name: start vault
   service: name=vault state=started
 
+- name: start supervisor service
+  service: name=supervisor state=started
+
 - name: restart supervisor service
   service: name=supervisor state=restarted
 

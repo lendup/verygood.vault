@@ -23,7 +23,9 @@
 - name: Supervisor config
   template: dest=/etc/supervisor/conf.d/vault-http.conf src=vault-http.supervisor.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }}
   notify:
-    - restart supervisor service
+    - start supervisor service
+    - restart vault http
+
 
 - name: Install Vault binary
 #  s3: bucket=verygood object=/software/vault-http-{{ vg_vault_http_version }}.jar dest={{ vg_vault_http_binary }} mode=get
