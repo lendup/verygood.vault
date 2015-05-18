@@ -1,12 +1,12 @@
 vaultClients:
-  {% for vault_client in vg_vault_clients %}
+{% for vault_client in vg_vault_clients %}
   - rule: {{ vault_client.rule }}
     cls: {{ vault_client.cls }}
     config:
-      {% for item in vault_client.config %}
+{% for item in vault_client.config %}
       {{ item.key }}: {{ item.value }}
-      {% endfor %}
-  {% endfor %}
+{% endfor %}
+{% endfor %}
 
 tokenizer:
   cls: com.verygood.payments.vault.client.tokens.AWSKMSStringTokenizerFactory
