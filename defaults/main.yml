@@ -59,3 +59,8 @@ vg_vault_file_health_check:
   file_path: '/tmp/vault-health'
   check_connectivity: "true"
   connectivity_timeout_in_ms: 2000
+
+# application log levels
+vg_vault_log_level_general: INFO
+
+vg_vault_log_level_internal: DEBUG

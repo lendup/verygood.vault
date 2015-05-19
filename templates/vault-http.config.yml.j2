@@ -30,12 +30,12 @@ authenticationCredentials:
 {% endif %}
 
 logging:
-  level: INFO
+  level: {{ vg_vault_log_level_general }}
 
   # Logger-specific levels.
   loggers:
 
-    com.verygoodgroup.payments.vault: CONFIG
+    com.verygoodgroup.payments.vault: {{ vg_vault_log_level_internal }}
 
   appenders:
     - type: console
@@ -43,6 +43,7 @@ logging:
       timeZone: UTC
       target: stdout
       logFormat: "%d{ISO8601}|Δ<%r>|%level|%logger|Thd<%t>: %X{code} %m%n%rEx"
+{% if rsyslog_server_hostname %}
     - type: syslog
       host: {{ vg_vault_rsyslog_host }}
       port: {{ vg_vault_rsyslog_port }}
@@ -50,6 +51,7 @@ logging:
       threshold: ALL
       stackTracePrefix: \t
       logFormat: "%d{ISO8601}|Δ<%r>|%level|%logger|Thd<%t>: %X{code} %m%n%rEx"
+{% endif %}
 
 server:
   maxQueuedRequests: 65536
