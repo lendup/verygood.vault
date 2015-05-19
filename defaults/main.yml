@@ -51,6 +51,10 @@ vg_vault_aws_kms_key_id: 123
 
 vg_vault_db_uri: jdbc:postgresql://localhost/test
 
+vg_vault_authentication_credentials:
+  - username: username
+    password_hash: some_sha256_hash
+
 vg_vault_file_health_check:
   file_path: '/tmp/vault-health'
   check_connectivity: "true"

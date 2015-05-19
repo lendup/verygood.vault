@@ -21,6 +21,14 @@ tokenManager:
     connectionString: {{ vg_vault_db_uri }}
     driver: org.postgresql.Driver
 
+{% if vg_vault_authentication_credentials %}
+authenticationCredentials:
+{% for item in vg_vault_authentication_credentials %}
+  - username: {{ item.username }}
+    passwordHash: {{ item.password_hash }}
+{% endfor %}
+{% endif %}
+
 logging:
   level: INFO
 
