@@ -15,6 +15,8 @@ vg_vault_config_sftp: /etc/verygood/vault.sftp.conf.yml
 
 vg_vault_http_port: 8080
 vg_vault_http_bind: 0.0.0.0
+vg_vault_http_admin_port: 8081
+vg_vault_http_admin_bind: 127.0.0.1
 vg_vault_thread_count: 8
 vg_vault_sftp_port: 8082
 vg_vault_sftp_bind: 0.0.0.0

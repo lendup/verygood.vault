@@ -61,6 +61,12 @@ server:
       bindHost: {{ vg_vault_http_bind }}
       selectorThreads: {{ vg_vault_thread_count }}
       acceptorThreads: {{ vg_vault_thread_count }}
+  adminConnectors:
+    - type: http
+      port: {{ vg_vault_http_admin_port }}
+      bindHost: {{ vg_vault_http_admin_bind }}
+      selectorThreads: {{ vg_vault_thread_count }}
+      acceptorThreads: {{ vg_vault_thread_count }}
   # HttpProxyServlet sits at the root, we're not currently using the DW API so bind it elsewhere.
   rootPath: '/api/*'
 
