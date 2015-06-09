@@ -1,38 +1,27 @@
-vaultClients:
-{#  {% for vault_client in vg_vault_clients %}#}
-{#  - rule: {{ vault_client.rule }}#}
-{#    cls: {{ vault_client.cls }}#}
-{#  {% endfor %}#}
+host: {{ vg_vault_sftp_bind }}
+port: {{ vg_vault_sftp_port }}
 
-  - rule: ServerName == "mycal.vgs.io" && RequestURI == "/vap/communicator/online"
-    cls: com.verygood.payments.vault.examples.MythicalCapitalClient
-    config:
-      scheme: http
-      host: localhost
-      port: 5000
-      endpoint: /echo/authorize
-  - rule: ServerName == "vault.vgs.io"
-    cls: com.verygood.payments.vault.examples.ReversingVaultClient
-  - rule: ServerName == "tokenize.vgs.io"
-    cls: com.verygood.payments.vault.examples.TokenizingClient
+# relative to config file
+hostKeyFile: vault-sftp.key
 
-tokenizer:
-  cls: com.verygood.payments.vault.client.tokens.AWSKMSStringTokenizerFactory
-  config:
-    keyId: {{ vg_vault_aws_kms_key_id }}
+clients:
+  - username: john
+    password: secret
 
-tokenManager:
-  cls: com.verygood.payments.vault.client.tokens.SQLTokenManagerFactory
-  config:
-    connectionString: jdbc:sqlite:/tmp/vault-http
+servers:
+  - rule: username == "john"
+    host: test.rebex.net
+    port: 22
+    username: demo
+    password: password
 
 logging:
-  level: INFO
+  level: {{ vg_vault_log_level_general }}
 
   # Logger-specific levels.
   loggers:
 
-    com.verygoodgroup.payments.vault: CONFIG
+    com.verygoodgroup.payments.vault: {{ vg_vault_log_level_internal }}
 
   appenders:
     - type: console
@@ -40,31 +29,12 @@ logging:
       timeZone: UTC
       target: stdout
       logFormat: "%d{ISO8601}|Δ<%r>|%level|%logger|Thd<%t>: %X{code} %m%n%rEx"
+{% if rsyslog_server_hostname %}
     - type: syslog
-      host: localhost
-      port: 514
+      host: {{ vg_vault_rsyslog_host }}
+      port: {{ vg_vault_rsyslog_port }}
       facility: local0
       threshold: ALL
       stackTracePrefix: \t
       logFormat: "%d{ISO8601}|Δ<%r>|%level|%logger|Thd<%t>: %X{code} %m%n%rEx"
-
-server:
-  maxQueuedRequests: 65536
-  applicationConnectors:
-    - type: http
-      port: {{ vg_vault_http_port }}
-      bindHost: {{ vg_vault_http_bind }}
-      selectorThreads: {{ vg_vault_thread_count }}
-      acceptorThreads: {{ vg_vault_thread_count }}
-  # HttpProxyServlet sits at the root, we're not currently using the DW API so bind it elsewhere.
-  rootPath: '/api/*'
-
-file_health_check:
-  file_path: {{ vg_vault_file_health_check.file_path }}
-  check_connectivity: {{ vg_vault_file_health_check.check_connectivity }}
-  connectivity_timeout_in_ms: {{ vg_vault_file_health_check.connectivity_timeout_in_ms }}
-  connectivity_hosts:
-    - bind_host: 8.8.8.8
-      port: 53
-    - bind_host: 8.8.4.4
-      port: 53
+{% endif %}

@@ -10,8 +10,9 @@ vg_vault_install_sftp: no
 vg_vault_rsyslog_host: localhost
 vg_vault_rsyslog_port: 514
 
-vg_vault_config_http: /etc/verygood/vault.http.conf.yml
-vg_vault_config_sftp: /etc/verygood/vault.sftp.conf.yml
+vg_vault_config_dir: /etc/verygood/
+vg_vault_config_http: "{{ vg_vault_config_dir }}vault.http.conf.yml"
+vg_vault_config_sftp: "{{ vg_vault_config_dir }}vault.sftp.conf.yml"
 # production, development, test, staging
 vg_vault_environment: production
 
