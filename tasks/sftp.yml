@@ -33,4 +33,3 @@
 
 - name: Vault Healthy
   copy: dest={{ vg_vault_file_health_check.file_path }} content="Very Good to go" owner={{ vg_vault_user }} group={{ vg_vault_group }}
-

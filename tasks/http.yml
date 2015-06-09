@@ -6,7 +6,7 @@
 - name: Copy config to {{ vg_vault_config_http }}
   template: dest={{ vg_vault_config_http }} backup=yes src=vault-http.config.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
   notify:
-    - restart supervisor service
+    - restart vault http
 
 - name: Create runit dir
   file: path=/etc/service/vault-http/log state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
@@ -24,8 +24,8 @@
   template: dest=/etc/supervisor/conf.d/vault-http.conf src=vault-http.supervisor.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }}
   notify:
     - start supervisor service
-    - restart vault http
-
+    - reread supervisor service
+    - update supervisor service
 
 - name: Install Vault binary
 #  s3: bucket=verygood object=/software/vault-http-{{ vg_vault_http_version }}.jar dest={{ vg_vault_http_binary }} mode=get

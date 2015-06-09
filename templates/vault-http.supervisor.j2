@@ -1,5 +1,5 @@
 [program:vault-http]
-command=java -jar {{ vg_vault_http_binary }} server {{ vg_vault_config_http }}
+command=java -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar -Dnewrelic.environment={{ vg_vault_environment }} -jar {{ vg_vault_http_binary }} server {{ vg_vault_config_http }}
 user={{ vg_vault_user }}
 autostart=true
 autorestart=true
@@ -15,4 +15,3 @@ stderr_logfile_maxbytes=20MB
 stderr_logfile_backups=1
 stderr_capture_maxbytes=0
 stderr_events_enabled=false
-

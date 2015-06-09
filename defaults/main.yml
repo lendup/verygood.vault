@@ -12,6 +12,14 @@ vg_vault_rsyslog_port: 514
 
 vg_vault_config_http: /etc/verygood/vault.http.conf.yml
 vg_vault_config_sftp: /etc/verygood/vault.sftp.conf.yml
+# production, development, test, staging
+vg_vault_environment: production
+
+vg_vault_newrelic_home: /opt/newrelic
+vg_vault_newrelic_key: 0cd8af3936694fc977e366c55aa4b9ff06599afd
+vg_vault_newrelic_url: https://s3-us-west-2.amazonaws.com/verygood/newrelic/newrelic-java-3.16.1.zip
+vg_vault_newrelic_app_name: vault
+vg_vault_newrelic_log_level: info
 
 vg_vault_http_port: 8080
 vg_vault_http_bind: 0.0.0.0
