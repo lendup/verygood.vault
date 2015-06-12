@@ -25,9 +25,9 @@ fingerprinter:
   pepper: {{ vg_vault_pepper }}
 
 clients:
-{% for vault_user in vg_vault_sftp_users %}
+{% for vault_user in vg_vault_authentication_credentials %}
   - username: {{ vault_user.username }}
-    passwordHash: {{ vault_user.passwordHash }}
+    passwordHash: {{ vault_user.password_hash }}
 {% endfor %}
 
 servers:
