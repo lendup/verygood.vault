@@ -61,6 +61,19 @@ vg_vault_http_handlers:
     cls: com.verygood.payments.vault.examples.TokenizingHandler
     client: com.verygood.payments.vault.examples.SampleVaultClient$Factory
 
+vg_vault_sftp_users:
+  - username: john
+    passwordHash: 2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b
+
+vg_vault_sftp_handlers:
+  - rule: username == "john"
+    client: com.verygood.payments.sftp.client.SampleVaultClient$Factory
+    host: test.rebex.net
+    port: 22
+    username: demo
+    password: password
+
+
 vg_vault_aws_kms_key_id: 123
 vg_vault_pepper: 20wJd8yNbFDJsJKy
 

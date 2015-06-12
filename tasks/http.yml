@@ -36,3 +36,5 @@
 - name: Vault Healthy
   copy: dest={{ vg_vault_file_health_check.file_path }} content="Very Good to go" owner={{ vg_vault_user }} group={{ vg_vault_group }}
 
+- name: Wait for vault-http to come up
+  wait_for: host={{ vg_vault_http_bind }} port={{ vg_vault_http_port }} delay=10 state=drained

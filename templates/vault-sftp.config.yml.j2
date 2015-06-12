@@ -4,16 +4,41 @@ port: {{ vg_vault_sftp_port }}
 # relative to config file
 hostKeyFile: vault-sftp.key
 
+# Remote server connect timeout in millis
+connectTimeout: 10000
+
+# Short format used -- just class name, no config
+# Long format is also available:
+# tokenManager:
+#   cls: fully qualified class name
+#   config:
+#     key1: value1
+#     key2: value2
+tokenManager: com.verygood.payments.sftp.client.ReverseTokenManager$Factory
+
+# Short format, see tokenManager comment for long format
+tokenizer: com.verygood.payments.sftp.client.IdentityTokenizer$Factory
+
+# Short format, see tokenManager comment for long format
+fingerprinter:
+  cls: com.verygood.payments.vault.client.fingerprints.BCryptFingerPrinter
+  pepper: {{ vg_vault_pepper }}
+
 clients:
-  - username: john
-    password: secret
+{% for vault_user in vg_vault_sftp_users %}
+  - username: {{ vault_user.username }}
+    passwordHash: {{ vault_user.passwordHash }}
+{% endfor %}
 
 servers:
-  - rule: username == "john"
-    host: test.rebex.net
-    port: 22
-    username: demo
-    password: password
+{% for vault_client in vg_vault_sftp_handlers %}
+  - rule: {{ vault_client.rule }}
+    client: {{ vault_client.client }}
+    host: {{ vault_client.host }}
+    port: {{ vault_client.port }}
+    username: {{ vault_client.username }}
+    password: {{ vault_client.password }}
+{% endfor %}
 
 logging:
   level: {{ vg_vault_log_level_general }}
