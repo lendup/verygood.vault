@@ -32,11 +32,13 @@ vg_vault_sftp_bind: 0.0.0.0
 
 vg_vault_home: /opt/vault/
 vg_vault_http_version: vault-http-0.1.5-SNAPSHOT
+vg_vault_http_jvm_options:
 vg_vault_http_binary: "{{ vg_vault_home }}{{ vg_vault_http_version }}.jar"
 vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_http_version }}.jar
 vg_vault_http_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
 
 vg_vault_sftp_version: vault-http-0.1.5-SNAPSHOT
+vg_vault_sftp_jvm_options:
 vg_vault_sftp_binary: "{{ vg_vault_home }}{{ vg_vault_sftp_version }}.jar"
 vg_vault_sftp_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_sftp_version }}.jar
 vg_vault_sftp_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
