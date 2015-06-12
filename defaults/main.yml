@@ -41,9 +41,10 @@ vg_vault_sftp_binary: "{{ vg_vault_home }}{{ vg_vault_sftp_version }}.jar"
 vg_vault_sftp_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_sftp_version }}.jar
 vg_vault_sftp_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
 
-vg_vault_clients:
+vg_vault_http_handlers:
   - rule: ServerName == "mycal.vgs.io" && RequestURI == "/vap/communicator/online"
-    cls: com.verygood.payments.vault.examples.MythicalCapitalClient
+    cls: com.verygood.payments.vault.examples.MythicalCapitalHandler
+    client: com.verygood.payments.vault.examples.SampleVaultClient$Factory
     config:
       - key: scheme
         value: https
@@ -54,11 +55,14 @@ vg_vault_clients:
       - key: endpoint
         value: /echo/authorize
   - rule: ServerName == "vault.vgs.io"
-    cls: com.verygood.payments.vault.examples.ReversingVaultClient
+    cls: com.verygood.payments.vault.examples.ReversingVaultHandler
+    client: com.verygood.payments.vault.examples.SampleVaultClient$Factory
   - rule: ServerName == "tokenize.vgs.io"
-    cls: com.verygood.payments.vault.examples.TokenizingClient
+    cls: com.verygood.payments.vault.examples.TokenizingHandler
+    client: com.verygood.payments.vault.examples.SampleVaultClient$Factory
 
 vg_vault_aws_kms_key_id: 123
+vg_vault_pepper: 20wJd8yNbFDJsJKy
 
 vg_vault_db_uri: jdbc:postgresql://localhost/test
 

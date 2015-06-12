@@ -1,7 +1,8 @@
-vaultClients:
-{% for vault_client in vg_vault_clients %}
+handlers:
+{% for vault_client in vg_vault_http_handlers %}
   - rule: {{ vault_client.rule }}
     cls: {{ vault_client.cls }}
+    client: {{ vault_client.client }}
 {% if vault_client.config %}
     config:
 {% for item in vault_client.config %}
@@ -20,6 +21,11 @@ tokenManager:
   config:
     connectionString: {{ vg_vault_db_uri }}
     driver: org.postgresql.Driver
+
+fingerprinter:
+  cls: com.verygood.payments.vault.client.fingerprints.BCryptFingerPrinter
+  pepper: {{ vg_vault_pepper }}
+
 
 {% if vg_vault_authentication_credentials %}
 authenticationCredentials:
