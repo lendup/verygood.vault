@@ -1,5 +1,5 @@
 [program:vault-http]
-command=java -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar -Dnewrelic.environment={{ vg_vault_environment }} -jar {{ vg_vault_http_binary }} server {{ vg_vault_config_http }}
+command=java -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar -Dnewrelic.environment={{ vg_vault_environment }} {{ vg_vault_http_jvm_options }} -jar {{ vg_vault_http_binary }} server {{ vg_vault_config_http }}
 user={{ vg_vault_user }}
 autostart=true
 autorestart=true
