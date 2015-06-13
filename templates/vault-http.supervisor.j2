@@ -1,8 +1,10 @@
+# {{ ansible_managed }}
 [program:vault-http]
-command=java -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar -Dnewrelic.environment={{ vg_vault_environment }} {{ vg_vault_http_jvm_options }} -jar {{ vg_vault_http_binary }} server {{ vg_vault_config_http }}
+command=java -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar -Dnewrelic.environment={{ vg_vault_environment }} -Dvault.http.env=vault.http.{{ vg_vault_env }}.yml {{ vg_vault_http_jvm_options }} -cp "{{ vg_vault_home }}*:{{ vg_vault_config_env_dir }}*:" com.verygood.payments.vault.VaultApplication server {{ vg_vault_config_http }}
 user={{ vg_vault_user }}
 autostart=true
 autorestart=true
+directory={{ vg_vault_home }}
 redirect_stderr=true
 redirect_stderr=false
 stdout_logfile=syslog

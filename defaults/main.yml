@@ -10,9 +10,14 @@ vg_vault_install_sftp: no
 vg_vault_rsyslog_host: localhost
 vg_vault_rsyslog_port: 514
 
+vg_vault_env: test
+vg_vault_home: /opt/vault/
 vg_vault_config_dir: /etc/verygood/
+vg_vault_config_env_dir: "{{ vg_vault_config_dir }}overrides/"
 vg_vault_config_http: "{{ vg_vault_config_dir }}vault.http.conf.yml"
+vg_vault_config_http_env_override: "{{ vg_vault_config_env_dir }}/vault.http.{{ vg_vault_env }}.yml"
 vg_vault_config_sftp: "{{ vg_vault_config_dir }}vault.sftp.conf.yml"
+vg_vault_config_sftp_env_override: "{{ vg_vault_config_env_dir }}/vault.sftp.{{ vg_vault_env }}.yml"
 # production, development, test, staging
 vg_vault_environment: production
 
@@ -30,7 +35,6 @@ vg_vault_thread_count: 8
 vg_vault_sftp_port: 8082
 vg_vault_sftp_bind: 0.0.0.0
 
-vg_vault_home: /opt/vault/
 vg_vault_http_version: vault-http-0.1.5-SNAPSHOT
 vg_vault_http_jvm_options: ""
 vg_vault_http_binary: "{{ vg_vault_home }}{{ vg_vault_http_version }}.jar"
