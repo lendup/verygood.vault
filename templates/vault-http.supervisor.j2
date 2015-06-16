@@ -7,7 +7,7 @@ command=java {{ vg_vault_http_jvm_options }}
     -cp "{{ vg_vault_home }}*:{{ vg_vault_config_overrides_dir }}*:"
     com.verygood.payments.vault.VaultApplication server "{{ vg_vault_http_default_config }}"
 user={{ vg_vault_user }}
-oautostart=true
+autostart=true
 autorestart=true
 directory={{ vg_vault_home }}
 redirect_stderr=true
