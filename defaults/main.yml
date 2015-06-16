@@ -28,17 +28,20 @@ vg_vault_newrelic_log_level: info
 
 # vault-http
 vg_vault_thread_count: 8
-vg_vault_http_version: vault-http-0.1.5-SNAPSHOT
-vg_vault_http_default_config: "{{ vg_vault_config_dir }}vault.http.conf.yml"
-vg_vault_http_override_config: "{{ vg_vault_config_overrides_dir }}/vault.http.{{ vg_vault_environment }}.yml"
+vg_vault_http_version: 0.3.3-SNAPSHOT
+vg_vault_http_config: "vault-config.yml"
+# if true, enables runtime config override
+vg_vault_http_config_override_enabled: false
+vg_vault_http_config_override: "{{ vg_vault_config_overrides_dir }}vault.http.{{ vg_vault_environment }}.yml"
 vg_vault_http_port: 8080
 vg_vault_http_bind: 0.0.0.0
 vg_vault_http_admin_port: 8081
 vg_vault_http_admin_bind: 127.0.0.1
 vg_vault_http_jvm_options: ""
-vg_vault_http_binary: "{{ vg_vault_home }}{{ vg_vault_http_version }}.jar"
-vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_http_version }}.jar
-vg_vault_http_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
+vg_vault_http_binary: "{{ vg_vault_home }}vault-http-{{ vg_vault_http_version }}.jar"
+# vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/vault-http-{{ vg_vault_http_version }}.jar
+vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/snapshot/com/verygood/payments/vault/vault-http/{{ vg_vault_http_version }}/vault-http-0.3.2-20150611.214629-1.jar
+vg_vault_http_binary_hash: 37297a7ab99c82cd0378b5549be329b4c6154144554da6d463124a962015c5f3
 
 # http handlers
 vg_vault_http_handlers:
@@ -63,8 +66,7 @@ vg_vault_http_handlers:
 
 # vault-sftp
 vg_vault_sftp_version: vault-http-0.1.5-SNAPSHOT
-vg_vault_sftp_default_config: "{{ vg_vault_config_dir }}vault.sftp.conf.yml"
-vg_vault_http_override_config: "{{ vg_vault_config_overrides_dir }}/vault.sftp.{{ vg_vault_environment }}.yml"
+vg_vault_sftp_config: "config-default.yml"
 vg_vault_sftp_port: 8082
 vg_vault_sftp_bind: 0.0.0.0
 vg_vault_sftp_jvm_options: ""

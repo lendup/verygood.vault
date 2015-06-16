@@ -3,15 +3,16 @@
 command=java {{ vg_vault_http_jvm_options }}
     -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar
     -Dnewrelic.environment={{ vg_vault_environment }}
-    -Dvault.http.env=vault.http.{{ vg_vault_environment }}.yml
-    -cp "{{ vg_vault_home }}*:{{ vg_vault_config_overrides_dir }}*:"
-    com.verygood.payments.vault.VaultApplication server "{{ vg_vault_http_default_config }}"
+    {% if vg_vault_http_config_override_enabled %}
+    -Dvault.http.env="{{ vg_vault_http_config_override }}"
+    {% endif %}
+    -jar "{{ vg_vault_http_binary }}" server "{{ vg_vault_http_config }}"
 user={{ vg_vault_user }}
 autostart=true
 autorestart=true
 directory={{ vg_vault_home }}
 redirect_stderr=true
-redirect_stderr=false
+redirect_stderr=true
 stdout_logfile=syslog
 stdout_logfile_maxbytes=20MB
 stdout_logfile_backups=1
@@ -21,4 +22,4 @@ stderr_logfile=syslog
 stderr_logfile_maxbytes=20MB
 stderr_logfile_backups=1
 stderr_capture_maxbytes=0
-stderr_events_enabled=false
+stderr_events_enabled=true

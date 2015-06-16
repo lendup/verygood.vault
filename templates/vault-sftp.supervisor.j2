@@ -3,7 +3,7 @@
 command=java "{{ vg_vault_sftp_jvm_options }}"
     -javaagent:"{{ vg_vault_newrelic_home }}"/newrelic.jar
     -Dnewrelic.environment="{{ vg_vault_environment }}"
-    -jar "{{ vg_vault_sftp_binary }}" --config "{{ vg_vault_sftp_default_config }}"
+    -jar "{{ vg_vault_sftp_binary }}" --config "{{ vg_vault_sftp_config }}"
 user={{ vg_vault_user }}
 autostart=true
 autorestart=true

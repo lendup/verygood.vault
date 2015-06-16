@@ -1,7 +1,13 @@
 #!/bin/sh
 exec 2>&1
 
-ROOT=/app
+ROOT="{{ vg_vault_home }}"
 
 cd $ROOT
-exec java -jar {{ vg_vault_http_binary }} server {{ vg_vault_config_http }}
+exec java {{ vg_vault_http_jvm_options }}                     \
+       -javaagent:{{ vg_vault_newrelic_home }}/newrelic.jar   \
+       -Dnewrelic.environment={{ vg_vault_environment }}      \
+       {% if vg_vault_http_config_override_enabled %}
+       -Dvault.http.env="{{ vg_vault_http_config_override }}" \
+       {% endif %}
+       -jar "{{ vg_vault_http_binary }}" server "{{ vg_vault_http_config }}"
