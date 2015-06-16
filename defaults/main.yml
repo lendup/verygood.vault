@@ -30,6 +30,7 @@ vg_vault_newrelic_log_level: info
 vg_vault_thread_count: 8
 vg_vault_http_version: vault-http-0.1.5-SNAPSHOT
 vg_vault_http_default_config: "{{ vg_vault_config_dir }}vault.http.conf.yml"
+vg_vault_http_override_config: "{{ vg_vault_config_overrides_dir }}/vault.http.{{ vg_vault_environment }}.yml"
 vg_vault_http_port: 8080
 vg_vault_http_bind: 0.0.0.0
 vg_vault_http_admin_port: 8081
@@ -63,6 +64,7 @@ vg_vault_http_handlers:
 # vault-sftp
 vg_vault_sftp_version: vault-http-0.1.5-SNAPSHOT
 vg_vault_sftp_default_config: "{{ vg_vault_config_dir }}vault.sftp.conf.yml"
+vg_vault_http_override_config: "{{ vg_vault_config_overrides_dir }}/vault.sftp.{{ vg_vault_environment }}.yml"
 vg_vault_sftp_port: 8082
 vg_vault_sftp_bind: 0.0.0.0
 vg_vault_sftp_jvm_options: ""

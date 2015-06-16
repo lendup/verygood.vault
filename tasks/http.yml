@@ -4,15 +4,10 @@
   file: path={{ vg_vault_config_dir }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
 
 - name: Create override dir
-  file: path={{ vg_vault_config_env_dir }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
+  file: path={{ vg_vault_config_overrides_dir }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
 
-- name: Generate config
-  template: dest={{ vg_vault_config_http }} backup=yes src=vault-http.config.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
-  notify:
-    - restart vault http
-
-- name: Generate overrides
-  template: dest={{ vg_vault_config_http_env_override }} backup=yes src=vault-http.override.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
+- name: Generate environment specific configuration override
+  template: dest={{ vg_vault_http_override_config }} backup=yes src=vault-http.override.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
   notify:
     - restart vault http
 
