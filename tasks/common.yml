@@ -11,11 +11,10 @@
 - name: Download newrelic jar
   get_url: url={{ vg_vault_newrelic_url }} dest=/tmp/newrelic.zip mode=0444
 
-- apt: name=unzip state=present
+- apt: update_cache=yes name=unzip state=present
 
 - name: Extract new relic
   unarchive: src=/tmp/newrelic.zip dest=/opt/ copy=no
 
 - name: Install newrelic config
   template: dest={{ vg_vault_home }}newrelic.yml src=newrelic.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }}
-

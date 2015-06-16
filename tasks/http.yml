@@ -1,12 +1,10 @@
 ---
 
 - name: Create config dir
-  file: path=/etc/verygood/ state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
+  file: path={{ vg_vault_config_dir }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
 
-- name: Copy config to {{ vg_vault_config_http }}
-  template: dest={{ vg_vault_config_http }} backup=yes src=vault-http.config.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
-  notify:
-    - restart vault http
+- name: Create override dir
+  file: path={{ vg_vault_config_overrides_dir }} state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
 
 - name: Create runit dir
   file: path=/etc/service/vault-http/log state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
@@ -30,6 +28,7 @@
 - name: Install Vault binary
 #  s3: bucket=verygood object=/software/vault-http-{{ vg_vault_http_version }}.jar dest={{ vg_vault_http_binary }} mode=get
   get_url: url={{ vg_vault_http_binary_url }} dest={{ vg_vault_http_binary }} sha256sum={{ vg_vault_http_binary_hash }}
+  when: vg_vault_http_binary_url
   notify:
     - restart vault http
 

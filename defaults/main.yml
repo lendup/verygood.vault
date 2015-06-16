@@ -1,48 +1,49 @@
 ---
 # defaults file for verygood.vault
 
+# user
 vg_vault_user: vault
 vg_vault_group: vault
 
+# install?
 vg_vault_install_http: no
 vg_vault_install_sftp: no
 
+# rsyslog
 vg_vault_rsyslog_host: localhost
 vg_vault_rsyslog_port: 514
 
-vg_vault_config_dir: /etc/verygood/
-vg_vault_config_http: "{{ vg_vault_config_dir }}vault.http.conf.yml"
-vg_vault_config_sftp: "{{ vg_vault_config_dir }}vault.sftp.conf.yml"
-# production, development, test, staging
+# environment: production, development, test, staging
 vg_vault_environment: production
+vg_vault_home: /opt/vault/
+vg_vault_config_dir: /etc/verygood/
+vg_vault_config_overrides_dir: "{{ vg_vault_config_dir }}overrides/"
 
+# newrelic
 vg_vault_newrelic_home: /opt/newrelic
 vg_vault_newrelic_key: 0cd8af3936694fc977e366c55aa4b9ff06599afd
 vg_vault_newrelic_url: https://s3-us-west-2.amazonaws.com/verygood/newrelic/newrelic-java-3.16.1.zip
 vg_vault_newrelic_app_name: vault
 vg_vault_newrelic_log_level: info
 
+# vault-http
+vg_vault_thread_count: 8
+vg_vault_http_version: 0.3.3-SNAPSHOT
+vg_vault_http_config: "vault-config.yml"
+# if true, enables runtime config override
+vg_vault_http_config_override_enabled: false
+vg_vault_http_config_override: "{{ vg_vault_config_overrides_dir }}vault.http.{{ vg_vault_environment }}.yml"
 vg_vault_http_port: 8080
 vg_vault_http_bind: 0.0.0.0
 vg_vault_http_admin_port: 8081
 vg_vault_http_admin_bind: 127.0.0.1
-vg_vault_thread_count: 8
-vg_vault_sftp_port: 8082
-vg_vault_sftp_bind: 0.0.0.0
-
-vg_vault_home: /opt/vault/
-vg_vault_http_version: vault-http-0.1.5-SNAPSHOT
 vg_vault_http_jvm_options: ""
-vg_vault_http_binary: "{{ vg_vault_home }}{{ vg_vault_http_version }}.jar"
-vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_http_version }}.jar
-vg_vault_http_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
+vg_vault_http_binary: "{{ vg_vault_home }}vault-http-{{ vg_vault_http_version }}.jar"
+# vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/vault-http-{{ vg_vault_http_version }}.jar
+vg_vault_http_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/snapshot/com/verygood/payments/vault/vault-http/{{ vg_vault_http_version }}/vault-http-0.3.2-20150611.214629-1.jar
+vg_vault_http_binary_hash: 37297a7ab99c82cd0378b5549be329b4c6154144554da6d463124a962015c5f3
 
-vg_vault_sftp_version: vault-http-0.1.5-SNAPSHOT
-vg_vault_sftp_jvm_options: ""
-vg_vault_sftp_binary: "{{ vg_vault_home }}{{ vg_vault_sftp_version }}.jar"
-vg_vault_sftp_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_sftp_version }}.jar
-vg_vault_sftp_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
-
+# http handlers
 vg_vault_http_handlers:
   - rule: ServerName == "mycal.vgs.io" && RequestURI == "/vap/communicator/online"
     cls: com.verygood.payments.vault.examples.MythicalCapitalHandler
@@ -63,6 +64,17 @@ vg_vault_http_handlers:
     cls: com.verygood.payments.vault.examples.TokenizingHandler
     client: com.verygood.payments.vault.examples.SampleVaultClient$Factory
 
+# vault-sftp
+vg_vault_sftp_version: vault-http-0.1.5-SNAPSHOT
+vg_vault_sftp_config: "config-default.yml"
+vg_vault_sftp_port: 8082
+vg_vault_sftp_bind: 0.0.0.0
+vg_vault_sftp_jvm_options: ""
+vg_vault_sftp_binary: "{{ vg_vault_home }}{{ vg_vault_sftp_version }}.jar"
+vg_vault_sftp_binary_url: https://s3-us-west-2.amazonaws.com/verygood/software/{{ vg_vault_sftp_version }}.jar
+vg_vault_sftp_binary_hash: 6269931f2186e726613d70d03628bc92a51d9de8165b5bd507293e7598d1921a
+
+# sftp handlers
 vg_vault_sftp_handlers:
   - rule: username == "john"
     client: com.verygood.payments.sftp.client.SampleVaultClient$Factory
@@ -71,9 +83,9 @@ vg_vault_sftp_handlers:
     username: demo
     password: password
 
+# misc
 vg_vault_aws_kms_key_id: 123
 vg_vault_pepper: 20wJd8yNbFDJsJKy
-
 vg_vault_db_uri: jdbc:postgresql://localhost/test
 
 vg_vault_authentication_credentials:
@@ -89,5 +101,4 @@ vg_vault_file_health_check:
 
 # application log levels
 vg_vault_log_level_general: INFO
-
 vg_vault_log_level_internal: DEBUG

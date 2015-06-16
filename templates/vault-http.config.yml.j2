@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 handlers:
 {% for vault_client in vg_vault_http_handlers %}
   - rule: {{ vault_client.rule }}

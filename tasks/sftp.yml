@@ -3,11 +3,6 @@
 - name: Create config dir
   file: path=/etc/verygood/ state=directory owner={{ vg_vault_user }} group={{ vg_vault_group }} recurse=yes
 
-- name: Copy config to {{ vg_vault_config_sftp }}
-  template: dest={{ vg_vault_config_sftp }} backup=yes src=vault-sftp.config.yml.j2 owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0644
-  notify:
-    - restart vault sftp
-
 - name: Copy hostkey to config dir
   copy: dest={{ vg_vault_config_dir }}vault-sftp.key src=vault-sftp.key owner={{ vg_vault_user }} group={{ vg_vault_group }} mode=0440
   notify:
