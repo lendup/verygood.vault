@@ -28,6 +28,12 @@
     - update supervisor service
 
 - name: Install Vault binary
+  s3: bucket={{ vg_s3_release_bucket} object=/software/release/com/verygood/payments/vault/vault-sftp/{{ vg_vault_sftp_version }}/vault-sftp-{{ vg_vault_sftp_version }}.jar dest={{ vg_vault_sftp_binary }} mode=get
+  when: vg_vault_sftp_version
+  notify:
+    - restart vault sftp
+
+- name: Install Vault binary
   get_url: url={{ vg_vault_sftp_binary_url }} dest={{ vg_vault_sftp_binary }} sha256sum={{ vg_vault_sftp_binary_hash }}
   notify:
     - restart vault sftp

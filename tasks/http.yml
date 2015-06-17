@@ -26,9 +26,9 @@
     - update supervisor service
 
 - name: Install Vault binary
-#  s3: bucket=verygood object=/software/vault-http-{{ vg_vault_http_version }}.jar dest={{ vg_vault_http_binary }} mode=get
-  get_url: url={{ vg_vault_http_binary_url }} dest={{ vg_vault_http_binary }} sha256sum={{ vg_vault_http_binary_hash }}
-  when: vg_vault_http_binary_url
+  s3: bucket={{ vg_s3_release_bucket} object=/software/release/com/verygood/payments/vault/vault-http/{{ vg_vault_http_version }}/vault-http-{{ vg_vault_http_version }}.jar dest={{ vg_vault_http_binary }} mode=get
+#  get_url: url={{ vg_vault_http_binary_url }} dest={{ vg_vault_http_binary }} sha256sum={{ vg_vault_http_binary_hash }}
+  when: vg_vault_http_version
   notify:
     - restart vault http
 
